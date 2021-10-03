@@ -6,13 +6,11 @@ import Header from "./Header";
 import "./index.css"
 import Home from "./Home";
 import Ingredients from "./Ingredients";
-
-
+import Browse from "./Browse";
 
 
 const App = () => {
     return (
-
             <Router>
                 <Header/>
                 <div className="container">
@@ -20,10 +18,9 @@ const App = () => {
                 <Route path="/drinks"><Drinks/></Route>
                 <Route path="/drink/:id"><DrinkDetails/></Route>
                 <Route path="/ingredients/:name"><Ingredients/></Route>
+                <Route path="/browse/:name"><Browse/></Route>
                 </div>
             </Router>
-
-
     );
 };
 

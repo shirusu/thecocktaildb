@@ -1,18 +1,23 @@
 import React, {useState, useEffect} from 'react';
+import {Link, useParams} from "react-router-dom";
 import axios from "axios"
-import {Link} from "react-router-dom";
-import Spinner from "./Spinner";
 
-const Drinks = () => {
+
+const Browse = () => {
     const [drinks, setDrinks] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    useEffect(() => {
-        axios("https://www.thecocktaildb.com/api/json/v2/1/popular.php")
-            .then(({data}) => setDrinks(data.drinks))
-        setIsLoading(false)
-    }, [])
+    const [error, setError] = useState("")
+    const params = useParams()
 
-if(isLoading) return <Spinner/>
+    useEffect(() => {
+        axios(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${params.name}`)
+            .then(res => {
+                if (res.data.drinks) {
+                    setDrinks(res.data.drinks)
+                }else{
+                    setError("Такого коктейла нет")
+                }
+            })
+    }, [params.name])
 
     return (
         <div>
@@ -30,8 +35,9 @@ if(isLoading) return <Spinner/>
                     )
                 }
             </div>
+            <h2>{error}</h2>
         </div>
     );
 };
 
-export default Drinks;
+export default Browse;

@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from "react-router-dom"
 import axios from "axios"
 import {Link} from "react-router-dom";
+import Spinner from "./Spinner";
 
 const DrinkDetails = () => {
     const [drink, setDrink] = useState({})
     const [ingredients, setIngredients] = useState([])
+    const [isLoading,setIsLoading] = useState(true)
     const params = useParams()
 
     useEffect(async () => {
@@ -18,8 +20,10 @@ const DrinkDetails = () => {
         }, [])
         setIngredients(ingredientsList)
         setDrink(drinks[0])
+        setIsLoading(false)
     }, [])
 
+if(isLoading) return <Spinner/>
     return (
         <div>
         <div className="row">
